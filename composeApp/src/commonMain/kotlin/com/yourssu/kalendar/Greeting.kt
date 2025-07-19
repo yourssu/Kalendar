@@ -6,4 +6,11 @@ class Greeting {
     fun greet(): String {
         return "Hello, ${platform.name}!"
     }
+
+    fun deviceName(): String {
+        return platform.name
+    }
+    fun deviceSecond(): Long {
+        return platform.seconds
+    }
 }
