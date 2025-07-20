@@ -41,29 +41,34 @@ fun SharedExampleComposable(name: String, modifier: Modifier = Modifier, current
             Text("- 기기 -")
             Text(nowDate.simpleCalendarFormat())
             Text(nowDate.simpleTimeFormat())
-            val calArray =
-                Date.getMonthCalendar(utcDate.getYear(), utcDate.getMonth(), DayOfWeek.SUNDAY)
 
             Text(
                 modifier = Modifier.padding(vertical = 12.dp),
                 text = "${utcDate.getYear()}년 ${utcDate.getMonth()}월"
             )
 
-            Row {
-                for(cell in Date.getWeekDays(DayOfWeek.SUNDAY).map { it.kor }) {
-                    Text(modifier = Modifier.weight(1f), text = cell)
-                }
+            val weekStartDays = listOf(DayOfWeek.SUNDAY, DayOfWeek.MONDAY)
+            val calArrays = weekStartDays.map { weekStart ->
+                weekStart to Date.getMonthCalendar(utcDate.getYear(), utcDate.getMonth(), weekStart)
             }
 
-            for(row in calArray) {
+            for((weekStart, calArray) in calArrays) {
                 Row {
-                    for (cell in row) {
-                        Text(modifier = Modifier.weight(1f), text = cell?.toString() ?: "")
+                    for(cell in Date.getWeekDays(weekStart).map { it.kor }) {
+                        Text(modifier = Modifier.padding(top = 12.dp).weight(1f), text = cell)
+                    }
+                }
+
+                for (row in calArray) {
+                    Row {
+                        for (cell in row) {
+                            Text(modifier = Modifier.weight(1f), text = cell?.toString() ?: "")
+                        }
                     }
                 }
             }
 
-            printCalendar(calArray, Date.getWeekDays(DayOfWeek.SUNDAY))
+//            printCalendar(calArray, Date.getWeekDays(DayOfWeek.SUNDAY))
 
             /* Date.kt 테스트 끝 */
         }
