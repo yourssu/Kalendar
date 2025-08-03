@@ -47,26 +47,28 @@ fun MonthlyKalendar(
             Row {
                 for (cell in calArray) {
                     val currentCell = cell?.toString() ?: ""
+
+                    val dateForCell = if (currentCell.isNotBlank()) {
+                        Date(
+                            kalendarState.currentDate.year,
+                            kalendarState.currentDate.month,
+                            currentCell.toInt()
+                        )
+                    } else null
+
+                    val isSelected = dateForCell?.let { date ->
+                        kalendarState.selectedDates.any {
+                            it.simpleCalendarFormat() == date.simpleCalendarFormat()
+                        }
+                    } ?: false
+
                     dateCellUI(
                         Modifier.clickable {
-                            if (currentCell.isNotBlank()) {
-                                onDateClick(
-                                    Date(
-                                        kalendarState.currentDate.year,
-                                        kalendarState.currentDate.month,
-                                        currentCell.toInt()
-                                    )
-                                )
-                            }
+                            dateForCell?.let { onDateClick(it) }
                         },
                         currentCell,
-                        currentCell.isNotBlank() && kalendarState.selectedDates.any {
-                            it.simpleCalendarFormat() == Date(
-                                kalendarState.currentDate.year,
-                                kalendarState.currentDate.month,
-                                currentCell.toInt()
-                            ).simpleCalendarFormat()
-                        })
+                        isSelected
+                    )
 
                 }
             }
