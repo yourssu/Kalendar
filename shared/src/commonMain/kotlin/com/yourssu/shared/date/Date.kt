@@ -23,6 +23,34 @@ class Date {
         init()
     }
 
+    constructor(year: Int, month: Int, day: Int) {
+        this.year = year
+        this.month = month
+        this.day = day
+
+        var days = 0L
+
+        // 1970년부터 해당 연도 전년까지의 총 일수
+        if (year > 1970) {
+            days += getDaysOfYears(1970..year-1)
+        }
+
+        // 해당 연도의 1월부터 해당 월 전월까지의 일수
+        for (m in 1 until month) {
+            days += getDaysInMonth(year, m)
+        }
+
+        // 해당 월의 일수 (day - 1, 0부터 시작하므로)
+        days += (day - 1)
+
+        // epochSeconds 계산
+        epochSeconds = days * 24 * 3600
+
+        // 요일 계산 (1970.1.1은 목요일)
+        daysOfWeek = DayOfWeek.entries[((days + 3) % 7).toInt()]
+
+    }
+
     private var year = 1970
     private var month = 1
     private var day = 1
