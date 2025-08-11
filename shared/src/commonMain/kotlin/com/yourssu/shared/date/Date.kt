@@ -23,9 +23,115 @@ class Date {
         init()
     }
 
-    private var year = 1970
-    private var month = 1
-    private var day = 1
+    constructor(year: Int, month: Int, day: Int) {
+        this.year = year
+        this.month = month
+        this.day = day
+
+        var days = 0L
+
+        // 1970년부터 해당 연도 전년까지의 총 일수
+        if (year > 1970) {
+            days += getDaysOfYears(1970..year-1)
+        }
+
+        // 해당 연도의 1월부터 해당 월 전월까지의 일수
+        for (m in 1 until month) {
+            days += getDaysInMonth(year, m)
+        }
+
+        // 해당 월의 일수
+        days += day
+
+        // 요일 계산 (1970.1.1은 목요일)
+        daysOfWeek = DayOfWeek.entries[((days + 3) % 7).toInt()]
+
+        // epochSeconds 계산
+        epochSeconds = days * 24 * 3600
+
+    }
+
+    var year = 1970
+        set(value) {
+            field = value
+
+            var days = 0L
+
+            // 1970년부터 해당 연도 전년까지의 총 일수
+            if (year > 1970) {
+                days += getDaysOfYears(1970..year-1)
+            }
+
+            // 해당 연도의 1월부터 해당 월 전월까지의 일수
+            for (m in 1 until month) {
+                days += getDaysInMonth(year, m)
+            }
+
+            // 해당 월의 일수
+            days += day
+
+            // 요일 계산 (1970.1.1은 목요일)
+            daysOfWeek = DayOfWeek.entries[((days + 3) % 7).toInt()]
+        }
+
+    var month = 1
+        set(value) {
+            field = value
+            if(field > 12) {
+                year++
+                field = field - 12
+            } else if(field < 1) {
+                field = 12
+                year--
+            }
+
+            var days = 0L
+
+            // 1970년부터 해당 연도 전년까지의 총 일수
+            if (year > 1970) {
+                days += getDaysOfYears(1970..year-1)
+            }
+
+            // 해당 연도의 1월부터 해당 월 전월까지의 일수
+            for (m in 1 until month) {
+                days += getDaysInMonth(year, m)
+            }
+
+            // 해당 월의 일수
+            days += day
+
+            // 요일 계산 (1970.1.1은 목요일)
+            daysOfWeek = DayOfWeek.entries[((days + 3) % 7).toInt()]
+        }
+    var day = 1
+        set(value) {
+            field = value
+            if(field > getDaysInMonth(year, month)) {
+                month += 1
+                field = field - getDaysInMonth(year, month)
+            } else if(field < 1) {
+                month -= 1
+                field = getDaysInMonth(year, month)
+            }
+
+            var days = 0L
+
+            // 1970년부터 해당 연도 전년까지의 총 일수
+            if (year > 1970) {
+                days += getDaysOfYears(1970..year-1)
+            }
+
+            // 해당 연도의 1월부터 해당 월 전월까지의 일수
+            for (m in 1 until month) {
+                days += getDaysInMonth(year, m)
+            }
+
+            // 해당 월의 일수
+            days += day
+
+            // 요일 계산 (1970.1.1은 목요일)
+            daysOfWeek = DayOfWeek.entries[((days + 3) % 7).toInt()]
+        }
     private var daysOfWeek = DayOfWeek.THURSDAY
 
     private var currentTime: Duration = 0.seconds
@@ -50,20 +156,6 @@ class Date {
 
     }
 
-    /**
-     * @return 연도(Year)를 반환합니다.
-     */
-    fun getYear() = year
-
-    /**
-     * @return 월(Month)을 반환합니다.
-     */
-    fun getMonth() = month
-
-    /**
-     * @return 일(Day)을 반환합니다.
-     */
-    fun getDayInMonth() = day
 
     /**
      * @return 요일을 반환합니다.
@@ -74,9 +166,9 @@ class Date {
      * @return 간단한 형식으로 반환합니다.
      * @sample exampleOfSimpleCalendarFormat
      */
-    fun simpleCalendarFormat(): String = "${getYear()}-" +
-            "${getMonth().toString().padStart(2, '0')}-" +
-            "${getDayInMonth().toString().padStart(2, '0')}" +
+    fun simpleCalendarFormat(): String = "${year}-" +
+            "${month.toString().padStart(2, '0')}-" +
+            "${day.toString().padStart(2, '0')}" +
             "(${getDaysOfWeek().kor})"
 
     fun simpleTimeFormat(): String =
