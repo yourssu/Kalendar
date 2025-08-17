@@ -158,3 +158,64 @@ data class LightTheme(
     val scrim: Color = TonalPalettes.neutral0,
     val shadow: Color = TonalPalettes.neutral0
 )
+
+/**
+ *  [DarkTheme]
+ *  어두운 컬러를 정의합니다.
+ */
+data class DarkTheme(
+    // Primary
+    val primary: Color = Color(0xFFD0BCFE),
+    val onPrimary: Color = TonalPalettes.primary20,
+    val primaryContainer: Color = TonalPalettes.primary30,
+    val onPrimaryContainer: Color = TonalPalettes.primary90,
+    val primaryFixed: Color = TonalPalettes.primary90,
+    val primaryFixedDim: Color = TonalPalettes.primary80,
+    val onPrimaryFixed: Color = TonalPalettes.primary10,
+    val onPrimaryFixedVariant: Color = TonalPalettes.primary30,
+
+    // Secondary
+    val secondary: Color = TonalPalettes.secondary80,
+    val onSecondary: Color = TonalPalettes.secondary20,
+    val secondaryContainer: Color = TonalPalettes.secondary30,
+    val onSecondaryContainer: Color = TonalPalettes.secondary90,
+    val secondaryFixed: Color = TonalPalettes.secondary90,
+    val secondaryFixedDim: Color = TonalPalettes.secondary80,
+    val onSecondaryFixed: Color = TonalPalettes.secondary10,
+    val onSecondaryFixedVariant: Color = TonalPalettes.secondary30,
+
+    // Tertiary
+    val tertiary: Color = TonalPalettes.tertiary80,
+    val onTertiary: Color = TonalPalettes.tertiary20,
+    val tertiaryContainer: Color = TonalPalettes.tertiary30,
+    val onTertiaryContainer: Color = TonalPalettes.tertiary90,
+    val tertiaryFixed: Color = TonalPalettes.tertiary90,
+    val tertiaryFixedDim: Color = TonalPalettes.tertiary80,
+    val onTertiaryFixed: Color = TonalPalettes.tertiary10,
+    val onTertiaryFixedVariant: Color = TonalPalettes.tertiary30,
+
+    // Error
+    val error: Color = TonalPalettes.error80,
+    val onError: Color = TonalPalettes.error20,
+    val errorContainer: Color = TonalPalettes.error30,
+    val onErrorContainer: Color = TonalPalettes.error90,
+
+    // Surface
+    val surfaceDim: Color = Color(0xFF141218),
+    val surface: Color = Color(0xFF141218),
+    val surfaceBright: Color = Color(0xFF3B383E),
+    val surfaceContainerLowest: Color = Color(0xFF0F0D13),
+    val surfaceContainerLow: Color = TonalPalettes.neutral10,
+    val surfaceContainer: Color = Color(0xFF211F26),
+    val surfaceContainerHigh: Color = Color(0xFF2B2930),
+    val surfaceContainerHighest: Color = Color(0xFF36343B),
+    val onSurface: Color = TonalPalettes.neutral90,
+    val onSurfaceVariant: Color = TonalPalettes.neutralVariant80,
+    val outline: Color = TonalPalettes.neutralVariant60,
+    val outlineVariant: Color = TonalPalettes.neutralVariant30,
+    val inverseSurface: Color = TonalPalettes.neutral90,
+    val inverseOnSurface: Color = TonalPalettes.neutral20,
+    val inversePrimary: Color = TonalPalettes.primary40,
+    val scrim: Color = TonalPalettes.neutral0,
+    val shadow: Color = TonalPalettes.neutral0
+)
