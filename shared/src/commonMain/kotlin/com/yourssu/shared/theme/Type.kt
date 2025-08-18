@@ -16,7 +16,7 @@ import com.yourssu.shared.generated.resources.Roboto_Regular
 import org.jetbrains.compose.resources.Font
 
 @Composable
-fun rememberAppTypography(): KalendarTypography {
+fun rememberTypography(): KalendarTypography {
     val bold = Font(Res.font.Roboto_Bold, weight = FontWeight.Bold)
     val regular = Font(Res.font.Roboto_Regular, weight = FontWeight.Normal)
     val medium = Font(Res.font.Roboto_Medium, weight = FontWeight.Medium)

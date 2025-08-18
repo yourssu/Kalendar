@@ -34,7 +34,7 @@ fun KalendarTheme(
     content: @Composable () -> Unit
 ) {
     val kalendarColors = if (darkTheme) DarkKalendarColors else LightKalendarColors
-    val typography = rememberAppTypography()
+    val typography = rememberTypography()
 
     CompositionLocalProvider(
         LocalKalendarColors provides kalendarColors,
