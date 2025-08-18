@@ -1,5 +1,6 @@
 package com.yourssu.shared.theme
 
+import androidx.compose.runtime.Stable
 import androidx.compose.ui.graphics.Color
 
 /**
@@ -99,123 +100,187 @@ private object TonalPalettes {
 }
 
 /**
- *  [LightTheme]
- *  밝은 컬러를 정의합니다.
+ *  [KalendarColors]
+ *  Kalendar의 색상 기본 값을 정의합니다.
  */
-data class LightTheme(
+@Stable
+data class KalendarColors(
     // Primary
-    val primary: Color = TonalPalettes.primary40,
-    val onPrimary: Color = TonalPalettes.primary100,
-    val primaryContainer: Color = TonalPalettes.primary90,
-    val onPrimaryContainer: Color = Color(0xFF4F378A),
-    val primaryFixed: Color = TonalPalettes.primary90,
-    val primaryFixedDim: Color = TonalPalettes.primary80,
-    val onPrimaryFixed: Color = TonalPalettes.primary10,
-    val onPrimaryFixedVariant: Color = TonalPalettes.primary30,
+    val primary: Color,
+    val onPrimary: Color,
+    val primaryContainer: Color,
+    val onPrimaryContainer: Color,
+    val primaryFixed: Color,
+    val primaryFixedDim: Color,
+    val onPrimaryFixed: Color,
+    val onPrimaryFixedVariant: Color,
 
     // Secondary
-    val secondary: Color = TonalPalettes.secondary40,
-    val onSecondary: Color = TonalPalettes.secondary100,
-    val secondaryContainer: Color = TonalPalettes.secondary90,
-    val onSecondaryContainer: Color = Color(0xFF4A4459),
-    val secondaryFixed: Color = TonalPalettes.secondary90,
-    val secondaryFixedDim: Color = TonalPalettes.secondary80,
-    val onSecondaryFixed: Color = TonalPalettes.secondary10,
-    val onSecondaryFixedVariant: Color = TonalPalettes.secondary30,
+    val secondary: Color,
+    val onSecondary: Color,
+    val secondaryContainer: Color,
+    val onSecondaryContainer: Color,
+    val secondaryFixed: Color,
+    val secondaryFixedDim: Color,
+    val onSecondaryFixed: Color,
+    val onSecondaryFixedVariant: Color,
 
     // Tertiary
-    val tertiary: Color = TonalPalettes.tertiary40,
-    val onTertiary: Color = TonalPalettes.tertiary100,
-    val tertiaryContainer: Color = TonalPalettes.tertiary90,
-    val onTertiaryContainer: Color = TonalPalettes.tertiary30,
-    val tertiaryFixed: Color = TonalPalettes.tertiary90,
-    val tertiaryFixedDim: Color = TonalPalettes.tertiary80,
-    val onTertiaryFixed: Color = TonalPalettes.tertiary10,
-    val onTertiaryFixedVariant: Color = TonalPalettes.tertiary30,
+    val tertiary: Color,
+    val onTertiary: Color,
+    val tertiaryContainer: Color,
+    val onTertiaryContainer: Color,
+    val tertiaryFixed: Color,
+    val tertiaryFixedDim: Color,
+    val onTertiaryFixed: Color,
+    val onTertiaryFixedVariant: Color,
 
     // Error
-    val error: Color = TonalPalettes.error40,
-    val onError: Color = TonalPalettes.error100,
-    val errorContainer: Color = TonalPalettes.error90,
-    val onErrorContainer: Color = Color(0xFF852221),
+    val error: Color,
+    val onError: Color,
+    val errorContainer: Color,
+    val onErrorContainer: Color,
 
     // Surface
-    val surfaceDim: Color = Color(0xFFDED8E1),
-    val surface: Color = Color(0xFFFEF7FF),
-    val surfaceBright: Color = Color(0xFFFEF7FF),
-    val surfaceContainerLowest: Color = TonalPalettes.neutral100,
-    val surfaceContainerLow: Color = Color(0xFFF7F2FA),
-    val surfaceContainer: Color = Color(0xFFF3EDF7),
-    val surfaceContainerHigh: Color = Color(0xFFECE6F0),
-    val surfaceContainerHighest: Color = TonalPalettes.neutral90,
-    val onSurface: Color = TonalPalettes.neutral10,
-    val onSurfaceVariant: Color = TonalPalettes.neutralVariant30,
-    val outline: Color = TonalPalettes.neutralVariant50,
-    val outlineVariant: Color = TonalPalettes.neutralVariant80,
-    val inverseSurface: Color = TonalPalettes.neutral20,
-    val inverseOnSurface: Color = TonalPalettes.neutral95,
-    val inversePrimary: Color = TonalPalettes.primary80,
-    val scrim: Color = TonalPalettes.neutral0,
-    val shadow: Color = TonalPalettes.neutral0
+    val surfaceDim: Color,
+    val surface: Color,
+    val surfaceBright: Color,
+    val surfaceContainerLowest: Color,
+    val surfaceContainerLow: Color,
+    val surfaceContainer: Color,
+    val surfaceContainerHigh: Color,
+    val surfaceContainerHighest: Color,
+    val onSurface: Color,
+    val onSurfaceVariant: Color,
+    val outline: Color,
+    val outlineVariant: Color,
+    val inverseSurface: Color,
+    val inverseOnSurface: Color,
+    val inversePrimary: Color,
+    val scrim: Color,
+    val shadow: Color
 )
 
 /**
- *  [DarkTheme]
- *  어두운 컬러를 정의합니다.
+ *  [LightKalendarColors]
+ *  밝은 컬러를 정의합니다.
  */
-data class DarkTheme(
+
+val LightKalendarColors = KalendarColors(
     // Primary
-    val primary: Color = Color(0xFFD0BCFE),
-    val onPrimary: Color = TonalPalettes.primary20,
-    val primaryContainer: Color = TonalPalettes.primary30,
-    val onPrimaryContainer: Color = TonalPalettes.primary90,
-    val primaryFixed: Color = TonalPalettes.primary90,
-    val primaryFixedDim: Color = TonalPalettes.primary80,
-    val onPrimaryFixed: Color = TonalPalettes.primary10,
-    val onPrimaryFixedVariant: Color = TonalPalettes.primary30,
+    primary = TonalPalettes.primary40,
+    onPrimary = TonalPalettes.primary100,
+    primaryContainer = TonalPalettes.primary90,
+    onPrimaryContainer = Color(0xFF4F378A),
+    primaryFixed = TonalPalettes.primary90,
+    primaryFixedDim = TonalPalettes.primary80,
+    onPrimaryFixed = TonalPalettes.primary10,
+    onPrimaryFixedVariant = TonalPalettes.primary30,
 
     // Secondary
-    val secondary: Color = TonalPalettes.secondary80,
-    val onSecondary: Color = TonalPalettes.secondary20,
-    val secondaryContainer: Color = TonalPalettes.secondary30,
-    val onSecondaryContainer: Color = TonalPalettes.secondary90,
-    val secondaryFixed: Color = TonalPalettes.secondary90,
-    val secondaryFixedDim: Color = TonalPalettes.secondary80,
-    val onSecondaryFixed: Color = TonalPalettes.secondary10,
-    val onSecondaryFixedVariant: Color = TonalPalettes.secondary30,
+    secondary = TonalPalettes.secondary40,
+    onSecondary = TonalPalettes.secondary100,
+    secondaryContainer = TonalPalettes.secondary90,
+    onSecondaryContainer = Color(0xFF4A4459),
+    secondaryFixed = TonalPalettes.secondary90,
+    secondaryFixedDim = TonalPalettes.secondary80,
+    onSecondaryFixed = TonalPalettes.secondary10,
+    onSecondaryFixedVariant = TonalPalettes.secondary30,
 
     // Tertiary
-    val tertiary: Color = TonalPalettes.tertiary80,
-    val onTertiary: Color = TonalPalettes.tertiary20,
-    val tertiaryContainer: Color = TonalPalettes.tertiary30,
-    val onTertiaryContainer: Color = TonalPalettes.tertiary90,
-    val tertiaryFixed: Color = TonalPalettes.tertiary90,
-    val tertiaryFixedDim: Color = TonalPalettes.tertiary80,
-    val onTertiaryFixed: Color = TonalPalettes.tertiary10,
-    val onTertiaryFixedVariant: Color = TonalPalettes.tertiary30,
+    tertiary = TonalPalettes.tertiary40,
+    onTertiary = TonalPalettes.tertiary100,
+    tertiaryContainer = TonalPalettes.tertiary90,
+    onTertiaryContainer = TonalPalettes.tertiary30,
+    tertiaryFixed = TonalPalettes.tertiary90,
+    tertiaryFixedDim = TonalPalettes.tertiary80,
+    onTertiaryFixed = TonalPalettes.tertiary10,
+    onTertiaryFixedVariant = TonalPalettes.tertiary30,
 
     // Error
-    val error: Color = TonalPalettes.error80,
-    val onError: Color = TonalPalettes.error20,
-    val errorContainer: Color = TonalPalettes.error30,
-    val onErrorContainer: Color = TonalPalettes.error90,
+    error = TonalPalettes.error40,
+    onError = TonalPalettes.error100,
+    errorContainer = TonalPalettes.error90,
+    onErrorContainer = Color(0xFF852221),
 
     // Surface
-    val surfaceDim: Color = Color(0xFF141218),
-    val surface: Color = Color(0xFF141218),
-    val surfaceBright: Color = Color(0xFF3B383E),
-    val surfaceContainerLowest: Color = Color(0xFF0F0D13),
-    val surfaceContainerLow: Color = TonalPalettes.neutral10,
-    val surfaceContainer: Color = Color(0xFF211F26),
-    val surfaceContainerHigh: Color = Color(0xFF2B2930),
-    val surfaceContainerHighest: Color = Color(0xFF36343B),
-    val onSurface: Color = TonalPalettes.neutral90,
-    val onSurfaceVariant: Color = TonalPalettes.neutralVariant80,
-    val outline: Color = TonalPalettes.neutralVariant60,
-    val outlineVariant: Color = TonalPalettes.neutralVariant30,
-    val inverseSurface: Color = TonalPalettes.neutral90,
-    val inverseOnSurface: Color = TonalPalettes.neutral20,
-    val inversePrimary: Color = TonalPalettes.primary40,
-    val scrim: Color = TonalPalettes.neutral0,
-    val shadow: Color = TonalPalettes.neutral0
+    surfaceDim = Color(0xFFDED8E1),
+    surface = Color(0xFFFEF7FF),
+    surfaceBright = Color(0xFFFEF7FF),
+    surfaceContainerLowest = TonalPalettes.neutral100,
+    surfaceContainerLow = Color(0xFFF7F2FA),
+    surfaceContainer = Color(0xFFF3EDF7),
+    surfaceContainerHigh = Color(0xFFECE6F0),
+    surfaceContainerHighest = TonalPalettes.neutral90,
+    onSurface = TonalPalettes.neutral10,
+    onSurfaceVariant = TonalPalettes.neutralVariant30,
+    outline = TonalPalettes.neutralVariant50,
+    outlineVariant = TonalPalettes.neutralVariant80,
+    inverseSurface = TonalPalettes.neutral20,
+    inverseOnSurface = TonalPalettes.neutral95,
+    inversePrimary = TonalPalettes.primary80,
+    scrim = TonalPalettes.neutral0,
+    shadow = TonalPalettes.neutral0
+)
+
+/**
+ *  [DarkKalendarColors]
+ *  어두운 컬러를 정의합니다.
+ */
+
+val DarkKalendarColors = KalendarColors(
+    // Primary
+    primary = Color(0xFFD0BCFE),
+    onPrimary = TonalPalettes.primary20,
+    primaryContainer = TonalPalettes.primary30,
+    onPrimaryContainer = TonalPalettes.primary90,
+    primaryFixed = TonalPalettes.primary90,
+    primaryFixedDim = TonalPalettes.primary80,
+    onPrimaryFixed = TonalPalettes.primary10,
+    onPrimaryFixedVariant = TonalPalettes.primary30,
+
+    // Secondary
+    secondary = TonalPalettes.secondary80,
+    onSecondary = TonalPalettes.secondary20,
+    secondaryContainer = TonalPalettes.secondary30,
+    onSecondaryContainer = TonalPalettes.secondary90,
+    secondaryFixed = TonalPalettes.secondary90,
+    secondaryFixedDim = TonalPalettes.secondary80,
+    onSecondaryFixed = TonalPalettes.secondary10,
+    onSecondaryFixedVariant = TonalPalettes.secondary30,
+
+    // Tertiary
+    tertiary = TonalPalettes.tertiary80,
+    onTertiary = TonalPalettes.tertiary20,
+    tertiaryContainer = TonalPalettes.tertiary30,
+    onTertiaryContainer = TonalPalettes.tertiary90,
+    tertiaryFixed = TonalPalettes.tertiary90,
+    tertiaryFixedDim = TonalPalettes.tertiary80,
+    onTertiaryFixed = TonalPalettes.tertiary10,
+    onTertiaryFixedVariant = TonalPalettes.tertiary30,
+
+    // Error
+    error = TonalPalettes.error80,
+    onError = TonalPalettes.error20,
+    errorContainer = TonalPalettes.error30,
+    onErrorContainer = TonalPalettes.error90,
+
+    // Surface
+    surfaceDim = Color(0xFF141218),
+    surface = Color(0xFF141218),
+    surfaceBright = Color(0xFF3B383E),
+    surfaceContainerLowest = Color(0xFF0F0D13),
+    surfaceContainerLow = TonalPalettes.neutral10,
+    surfaceContainer = Color(0xFF211F26),
+    surfaceContainerHigh = Color(0xFF2B2930),
+    surfaceContainerHighest = Color(0xFF36343B),
+    onSurface = TonalPalettes.neutral90,
+    onSurfaceVariant = TonalPalettes.neutralVariant80,
+    outline = TonalPalettes.neutralVariant60,
+    outlineVariant = TonalPalettes.neutralVariant30,
+    inverseSurface = TonalPalettes.neutral90,
+    inverseOnSurface = TonalPalettes.neutral20,
+    inversePrimary = TonalPalettes.primary40,
+    scrim = TonalPalettes.neutral0,
+    shadow = TonalPalettes.neutral0
 )
