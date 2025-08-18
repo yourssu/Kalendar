@@ -46,9 +46,8 @@ fun rememberAppTypography(): KalendarTypography {
 @Immutable
 data class KalendarTypography(
     val displayLarge: TextStyle,
-    val displayMedium: TextStyle,
-
-    )
+    val displayMedium: TextStyle
+)
 
 private fun createTextStyle(
     fontSize: TextUnit,
