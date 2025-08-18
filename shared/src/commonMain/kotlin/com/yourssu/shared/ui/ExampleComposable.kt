@@ -1,14 +1,10 @@
 package com.yourssu.shared.ui
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.Button
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -42,7 +38,7 @@ fun SharedExampleComposable(name: String, modifier: Modifier = Modifier, current
                     KalendarState(
                         nowDate,
                         DayOfWeek.SUNDAY,
-                        listOf<Date>()
+                        listOf()
                     )
                 )
             }
@@ -50,99 +46,57 @@ fun SharedExampleComposable(name: String, modifier: Modifier = Modifier, current
             Text(text = "안녕, $name! 여기는 shared 모듈입니다.")
 
             /* Date.kt 테스트 */
-
             Text(
                 modifier = Modifier.padding(vertical = 12.dp),
                 text = "=== Date.kt 테스트 ==="
             )
 
-            Row {
+            // 월 이동 버튼
+            Column {
                 Button(
                     onClick = {
-                        val currentDate = kalendarState.currentDate
-                        val newDate = Date(
-                            year = currentDate.year,
-                            month = currentDate.month - 1,  // 이전 달
-                            day = currentDate.day
-                        )
-
-                        kalendarState = kalendarState.copy(
-                            newDate,
-                            kalendarState.startOfWeek,
-                            kalendarState.selectedDates
-                        )
+                        val c = kalendarState.currentDate
+                        val newDate = Date(year = c.year, month = c.month - 1, day = c.day)
+                        kalendarState = kalendarState.copy(newDate, kalendarState.startOfWeek, kalendarState.selectedDates)
                     }
-                ) {
-                    Text("이전 달")
-                }
+                ) { Text("이전 달") }
+
                 Button(
                     onClick = {
-                        val currentDate = kalendarState.currentDate
-                        val newDate = Date(
-                            year = currentDate.year,
-                            month = currentDate.month + 1,  // 다음 달
-                            day = currentDate.day
-                        )
-
-                        kalendarState = kalendarState.copy(
-                            newDate,
-                            kalendarState.startOfWeek,
-                            kalendarState.selectedDates
-                        )
+                        val c = kalendarState.currentDate
+                        val newDate = Date(year = c.year, month = c.month + 1, day = c.day)
+                        kalendarState = kalendarState.copy(newDate, kalendarState.startOfWeek, kalendarState.selectedDates)
                     }
-                ) {
-                    Text("다음 달")
-                }
+                ) { Text("다음 달") }
             }
-
             MonthlyKalendar(
                 kalendarState = kalendarState,
-                titleUI = { year, month ->
-                    BasicCalendarTitle(year, month)
-                },
-                dateCellUI = { modifier, dateNum, isSelected ->
-                    // 위 modifier에 clickable이 들어있습니다. 원하는 컴포넌트가 클릭되도록 합니다.
-                    BasicDateCell(modifier = modifier
-                        .weight(1f)
-                        .aspectRatio(1f)
-                        .background(
-                            if(isSelected)
-                                Color.LightGray
-                            else
-                                Color.Unspecified
-                        ),
-                        dateNum = dateNum
-                    )
-                },
-                weekLabelUI = { weekName ->
-                    BasicWeekLabel(modifier = Modifier.padding(top = 12.dp).weight(1f), weekName)
-                },
                 onDateClick = { date ->
-                    val selectedDates = kalendarState.selectedDates
-
-                    val newSelectedDates = if (selectedDates.find {
-                            it.simpleCalendarFormat() == date.simpleCalendarFormat()
-                        } == null) {
-                        selectedDates.plus(date)
-                    } else {
-                        selectedDates.filterNot {
-                            it.simpleCalendarFormat() == date.simpleCalendarFormat()
-                        }
+                    val exists = kalendarState.selectedDates.any {
+                        it.simpleCalendarFormat() == date.simpleCalendarFormat()
                     }
-
-                    kalendarState = kalendarState.copy(selectedDates = newSelectedDates)
+                    kalendarState = if (!exists) {
+                        kalendarState.copy(selectedDates = kalendarState.selectedDates + date)
+                    } else {
+                        kalendarState.copy(selectedDates = kalendarState.selectedDates.filterNot {
+                            it.simpleCalendarFormat() == date.simpleCalendarFormat()
+                        })
+                    }
                 },
+                headerStyle = HeaderStyle.default(),                         // 헤더: 베이식 타이틀에 modifier만 적용
+                weekDayStyle = WeekDayStyle.default(),                       // 요일: 베이식 레이블에 modifier만 적용
+                dateCellStyle = DateCellStyle.default(),                     // 날짜 셀: 베이식 셀에 modifier만 적용
+                colors = CalendarColors.default().copy(                      // 선택 배경만 예시로 변경
+                    selectedDayBackgroundColor = Color.LightGray
+                )
             )
 
             Text(
                 modifier = Modifier.padding(vertical = 12.dp),
                 text = "선택한 날 : ${
-                    kalendarState.selectedDates.joinToString(",") {
-                        it.simpleCalendarFormat()
-                    }
+                    kalendarState.selectedDates.joinToString(",") { it.simpleCalendarFormat() }
                 }"
             )
-
 
             Text("- UTC -")
             Text(utcDate.simpleCalendarFormat())
@@ -155,23 +109,18 @@ fun SharedExampleComposable(name: String, modifier: Modifier = Modifier, current
                 modifier = Modifier.padding(vertical = 12.dp),
                 text = "${utcDate.year}년 ${utcDate.month}월"
             )
-
-
-
-
-//            printCalendar(calArray, Date.getWeekDays(DayOfWeek.SUNDAY))
-
-            /* Date.kt 테스트 끝 */
         }
     }
 }
 
 @Composable
-fun BasicCalendarTitle(year: Int, month: Int) {
+fun BasicCalendarTitle(year: Int, month: Int, modifier: Modifier = Modifier) {
     Text(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier,
         textAlign = TextAlign.Center,
-        text = "${year}년 ${month}월"
+        text = "${year}년 ${month}월",
+        style = MaterialTheme.typography.h6,
+        color = MaterialTheme.colors.onSurface
     )
 }
 
@@ -180,15 +129,19 @@ fun BasicWeekLabel(modifier: Modifier, weekName: String) {
     Text(
         modifier = modifier,
         textAlign = TextAlign.Center,
-        text = weekName
+        text = weekName,
+        style = MaterialTheme.typography.caption,
+        color = MaterialTheme.colors.onSurface
     )
 }
 
 @Composable
 fun BasicDateCell(modifier: Modifier = Modifier, dateNum: String) {
     Text(
-        modifier = modifier.wrapContentHeight(align = Alignment.CenterVertically),
+        modifier = modifier, // 상위에서 수직/수평 정렬 포함한 modifier를 전달
         textAlign = TextAlign.Center,
-        text = dateNum
+        text = dateNum,
+        style = MaterialTheme.typography.body1,
+        color = MaterialTheme.colors.onSurface
     )
 }

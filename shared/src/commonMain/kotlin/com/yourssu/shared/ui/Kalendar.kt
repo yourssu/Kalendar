@@ -1,75 +1,82 @@
 package com.yourssu.shared.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import com.yourssu.shared.date.Date
 import com.yourssu.shared.state.KalendarState
 
 @Composable
 fun MonthlyKalendar(
     kalendarState: KalendarState,
-    onDateClick: (Date) -> Unit, // 날짜 클릭 이벤트 콜백
-    modifier: Modifier = Modifier, // ... 기타 커스텀 파라미터
-    titleUI: @Composable (Int, Int) -> Unit,
-    weekLabelUI: @Composable (String) -> Unit,
-    dateCellUI: @Composable (Modifier, String, Boolean) -> Unit, // API 이용자는 직접 UI를 만들면서 클릭될 요소를 정할 수 있습니다
+    onDateClick: (Date) -> Unit,
+    modifier: Modifier = Modifier,
+    headerStyle: HeaderStyle = HeaderStyle.default(),
+    weekDayStyle: WeekDayStyle = WeekDayStyle.default(),
+    dateCellStyle: DateCellStyle = DateCellStyle.default(),
+    colors: CalendarColors = CalendarColors.default()
 ) {
+    Column(modifier = modifier) {
 
-    Column(
-        modifier = modifier
-    ) {
-        Box(
-            modifier = Modifier
-        ) {
-            titleUI(
-                kalendarState.currentDate.year,
-                kalendarState.currentDate.month,
-            )
+        // 1) 헤더 (월/년)
+        BasicCalendarTitle(
+            year = kalendarState.currentDate.year,
+            month = kalendarState.currentDate.month,
+            modifier = headerStyle.modifier
+        )
+
+        // 2) 요일 레이블
+        Row {
+            for (dayName in Date.getWeekDays(kalendarState.startOfWeek).map { it.kor }) {
+                BasicWeekLabel(
+                    modifier = weekDayStyle.modifier.then(Modifier.weight(1f)),
+                    weekName = dayName
+                )
+            }
         }
 
-        val calArrays = Date.getMonthCalendar(
+        // 3) 날짜 셀 그리드
+        val calMatrix = Date.getMonthCalendar(
             kalendarState.currentDate.year,
             kalendarState.currentDate.month,
             kalendarState.startOfWeek
         )
 
-        Row {
-            for (cell in Date.getWeekDays(kalendarState.startOfWeek).map { it.kor }) {
-                weekLabelUI(cell)
-//                Text(modifier = Modifier.padding(top = 12.dp).weight(1f), text = cell)
-            }
-        }
-        for (calArray in calArrays) {
+        for (week in calMatrix) {
             Row {
-                for (cell in calArray) {
-                    val currentCell = cell?.toString() ?: ""
+                for (cell in week) {
+                    val dayString = cell?.toString().orEmpty()
+                    if (dayString.isBlank()) {
+                        // 빈 칸
+                        Spacer(Modifier.weight(1f).aspectRatio(1f))
+                        continue
+                    }
 
-                    val dateForCell = if (currentCell.isNotBlank()) {
-                        Date(
-                            kalendarState.currentDate.year,
-                            kalendarState.currentDate.month,
-                            currentCell.toInt()
-                        )
-                    } else null
-
-                    val isSelected = dateForCell?.let { date ->
-                        kalendarState.selectedDates.any {
-                            it.simpleCalendarFormat() == date.simpleCalendarFormat()
-                        }
-                    } ?: false
-
-                    dateCellUI(
-                        Modifier.clickable {
-                            dateForCell?.let { onDateClick(it) }
-                        },
-                        currentCell,
-                        isSelected
+                    val dateObj = Date(
+                        kalendarState.currentDate.year,
+                        kalendarState.currentDate.month,
+                        dayString.toInt()
                     )
 
+                    val isSelected = kalendarState.selectedDates.any {
+                        it.simpleCalendarFormat() == dateObj.simpleCalendarFormat()
+                    }
+
+                    val bg = if (isSelected) colors.selectedDayBackgroundColor else Color.Transparent
+
+                    BasicDateCell(
+                        modifier = dateCellStyle.modifier
+                            .then(Modifier.weight(1f).aspectRatio(1f))
+                            .background(bg)
+                            .clickable { onDateClick(dateObj) },
+                        dateNum = dayString
+                    )
                 }
             }
         }
@@ -79,8 +86,61 @@ fun MonthlyKalendar(
 @Composable
 fun WeeklyKalendar(
     kalendarState: KalendarState,
-    onDateClick: (Date) -> Unit, // 날짜 클릭 이벤트 콜백
-    modifier: Modifier = Modifier // ... 기타 커스텀 파라미터
+    onDateClick: (Date) -> Unit,
+    modifier: Modifier = Modifier,
+    weekDayStyle: WeekDayStyle = WeekDayStyle.default(),
+    dateCellStyle: DateCellStyle = DateCellStyle.default(),
+    colors: CalendarColors = CalendarColors.default()
 ) {
+    // 현재 월에서, 현재 날짜가 포함된 주 행을 찾음
+    val monthMatrix = Date.getMonthCalendar(
+        kalendarState.currentDate.year,
+        kalendarState.currentDate.month,
+        kalendarState.startOfWeek
+    )
+    val weekRow = monthMatrix.firstOrNull { row ->
+        row.contains(kalendarState.currentDate.day)
+    } ?: monthMatrix.firstOrNull() ?: emptyList()
 
+    Column(modifier = modifier) {
+
+        // 요일 레이블
+        Row {
+            for (dayName in Date.getWeekDays(kalendarState.startOfWeek).map { it.kor }) {
+                BasicWeekLabel(
+                    modifier = weekDayStyle.modifier.then(Modifier.weight(1f)),
+                    weekName = dayName
+                )
+            }
+        }
+
+        // 해당 주의 날짜 셀
+        Row {
+            for (cell in weekRow) {
+                val dayString = cell?.toString().orEmpty()
+                if (dayString.isBlank()) {
+                    Spacer(Modifier.weight(1f).aspectRatio(1f))
+                    continue
+                }
+
+                val dateObj = Date(
+                    kalendarState.currentDate.year,
+                    kalendarState.currentDate.month,
+                    dayString.toInt()
+                )
+                val isSelected = kalendarState.selectedDates.any {
+                    it.simpleCalendarFormat() == dateObj.simpleCalendarFormat()
+                }
+                val bg = if (isSelected) colors.selectedDayBackgroundColor else Color.Transparent
+
+                BasicDateCell(
+                    modifier = dateCellStyle.modifier
+                        .then(Modifier.weight(1f).aspectRatio(1f))
+                        .background(bg)
+                        .clickable { onDateClick(dateObj) },
+                    dateNum = dayString
+                )
+            }
+        }
+    }
 }
