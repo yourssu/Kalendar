@@ -9,13 +9,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import com.yourssu.shared.theme.KalendarTheme
 import com.yourssu.shared.ui.SharedExampleComposable
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 @Preview
 fun App() {
-    MaterialTheme {
+    KalendarTheme {
 //        var showContent by remember { mutableStateOf(false) }
 //        Column(
 //            modifier = Modifier
@@ -35,7 +36,7 @@ fun App() {
 //            }
 //        }
         Column(
-            modifier = Modifier.fillMaxSize().background(Color.White),
+            modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             val deviceName = remember { Greeting().deviceName() }
