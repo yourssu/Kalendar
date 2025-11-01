@@ -11,6 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.yourssu.shared.theme.KalendarTheme
 import com.yourssu.shared.ui.SharedExampleComposable
+import com.yourssu.shared.ui.inputdate.InputDatePickerRange
+import com.yourssu.shared.ui.inputdate.InputDatePickerSingle
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
@@ -35,6 +37,7 @@ fun App() {
 //                }
 //            }
 //        }
+        /*
         Column(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
@@ -43,5 +46,26 @@ fun App() {
             val deviceTime = remember { Greeting().deviceSecond() }
             SharedExampleComposable(deviceName, currentTimeSecond = deviceTime)
         }
+        */
+        /*
+        // 단일
+        InputDatePickerSingle(
+            onCancel = { /* 닫기 */ },
+            onConfirm = { dp -> /* dp: DateParts(year, month, day) / dotFormat(dp) */ }
+        )
+
+        InputDatePickerRange(
+            onCancel = { },
+            onConfirm = { s, e -> /* s/e: DateParts */ }
+        )
+        */
+
+        InputDatePickerRange(
+            onCancel = { },
+            onConfirm = { start, end -> /* 처리 */ }
+        )
+
     }
+    // 단일 날짜
+
 }
