@@ -15,7 +15,7 @@ plugins {
 }
 
 group = "com.yourssu"
-version = "0.0.1"
+version = "0.0.2"
 // Maven 좌표 설정 (groupId:artifactId:version)—Central에 필요한 기본 요소
 
 kotlin {
